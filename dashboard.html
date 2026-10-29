@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://moucffbvpgldrxvtwfwv.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fb">
+  <script src="js/theme-init.js"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <title>فایل‌های من — ابرفایل</title>
+  <meta name="robots" content="noindex">
+</head>
+<body data-page="dashboard">
+  <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+  <header id="appHeader"></header>
+  <main class="container">
+    <section class="page-head fade-up">
+      <div>
+        <h1>فایل‌های من</h1>
+        <p class="muted">فایل‌هایی که از همین مرورگر آپلود کرده‌اید. کلید مدیریت هر فایل فقط در این مرورگر ذخیره است.</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn ghost sm" id="exportBtn" type="button" title="پشتیبان‌گیری از کلیدهای مدیریت"><i data-lucide="key-round"></i><span>خروجی کلیدها</span></button>
+        <label class="btn ghost sm" title="بازیابی کلیدها از فایل پشتیبان"><i data-lucide="folder-open"></i><span>ورود کلیدها</span><input type="file" id="importInput" accept="application/json,.json" hidden></label>
+        <button class="btn ghost sm" id="refreshBtn" type="button"><i data-lucide="refresh-cw"></i><span>به‌روزرسانی</span></button>
+        <a class="btn primary sm" href="index.html"><i data-lucide="upload"></i><span>آپلود جدید</span></a>
+      </div>
+    </section>
+
+    <section class="stats fade-up" id="stats" style="animation-delay:.06s"></section>
+
+    <section class="card list-card fade-up" style="animation-delay:.12s">
+      <div class="list-toolbar">
+        <span class="input-wrap search"><i data-lucide="search"></i><input type="search" id="search" placeholder="جستجوی نام فایل…"></span>
+        <select id="sort" aria-label="مرتب‌سازی">
+          <option value="new">جدیدترین</option>
+          <option value="downloads">بیشترین دانلود</option>
+          <option value="size">بزرگ‌ترین</option>
+          <option value="name">نام</option>
+        </select>
+      </div>
+      <div id="fileList" class="file-list"></div>
+    </section>
+  </main>
+  <footer id="appFooter"></footer>
+  <script id="lucide-cdn" src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.min.js" async></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

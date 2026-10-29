@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://moucffbvpgldrxvtwfwv.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fb">
+  <script src="js/theme-init.js"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <title>ابرفایل — آپلود و اشتراک‌گذاری سریع فایل</title>
+  <meta name="description" content="فایل‌هایتان را آپلود کنید و لینک دانلود امن دریافت کنید.">
+</head>
+<body data-page="upload">
+  <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+  <header id="appHeader"></header>
+
+  <main class="container">
+    <section class="hero fade-up">
+      <span class="eyebrow"><i data-lucide="zap"></i> سریع، امن و رایگان</span>
+      <h1>فایل‌هایت را <span class="grad">در چند ثانیه</span> به اشتراک بگذار</h1>
+      <p>فایل را بکش و رها کن، لینک بگیر و برای هر کسی بفرست. حداکثر <b data-max-size></b> برای هر فایل.</p>
+    </section>
+
+    <section class="card upload-card fade-up" style="animation-delay:.08s">
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="انتخاب یا رها کردن فایل برای آپلود">
+        <input type="file" id="fileInput" multiple hidden>
+        <div class="dz-icon"><i data-lucide="cloud-upload"></i></div>
+        <h2>فایل‌ها را اینجا رها کنید</h2>
+        <p>یا <span class="dz-link">از دستگاه انتخاب کنید</span> — چند فایل همزمان هم قبول است</p>
+        <small id="allowedHint" class="muted"></small>
+      </div>
+
+      <details class="options" id="optionsPanel">
+        <summary><i data-lucide="sliders-horizontal"></i><span>تنظیمات امنیتی (اختیاری)</span><i data-lucide="chevron-down" class="chev"></i></summary>
+        <div class="options-grid">
+          <label class="field">
+            <span class="field-label"><i data-lucide="lock"></i> رمز عبور</span>
+            <span class="input-wrap">
+              <input type="password" id="optPassword" placeholder="بدون رمز" maxlength="128" autocomplete="new-password">
+              <button type="button" class="icon-btn sm" id="togglePw" aria-label="نمایش رمز"><i data-lucide="eye"></i></button>
+            </span>
+          </label>
+          <label class="field">
+            <span class="field-label"><i data-lucide="timer"></i> انقضای لینک</span>
+            <select id="optExpiry">
+              <option value="">بدون انقضا</option>
+              <option value="1">۱ ساعت</option>
+              <option value="24">۱ روز</option>
+              <option value="168">۷ روز</option>
+              <option value="720">۳۰ روز</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label"><i data-lucide="download"></i> حداکثر دانلود</span>
+            <input type="number" id="optMaxDl" min="1" max="10000" step="1" inputmode="numeric" placeholder="نامحدود">
+          </label>
+        </div>
+        <p class="hint"><i data-lucide="info"></i> این تنظیمات روی همه فایل‌های همین نوبت آپلود اعمال می‌شود.</p>
+      </details>
+
+      <div id="queueSection" class="queue-section" hidden>
+        <div class="queue-head">
+          <h3>صف آپلود <span class="badge" id="queueCount">۰</span></h3>
+          <div class="queue-actions">
+            <button class="btn ghost sm" id="copyAllBtn" type="button" hidden><i data-lucide="copy"></i><span>کپی همه لینک‌ها</span></button>
+            <button class="btn ghost sm" id="clearBtn" type="button"><i data-lucide="trash-2"></i><span>پاک کردن</span></button>
+            <button class="btn primary" id="uploadBtn" type="button"><i data-lucide="upload"></i><span>آپلود</span></button>
+          </div>
+        </div>
+        <div class="total-progress" id="totalProgress" hidden>
+          <div class="progress lg"><span></span></div>
+          <small class="muted" id="totalText"></small>
+        </div>
+        <ul id="queueList" class="queue-list"></ul>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature fade-up" style="animation-delay:.12s"><span class="f-ico"><i data-lucide="shield-check"></i></span><h4>امن و خصوصی</h4><p>نام یکتا برای هر فایل، بررسی نوع واقعی فایل، رمز عبور و لینک موقت دانلود.</p></div>
+      <div class="feature fade-up" style="animation-delay:.18s"><span class="f-ico"><i data-lucide="timer"></i></span><h4>لینک با تاریخ انقضا</h4><p>مدت اعتبار و سقف تعداد دانلود را خودتان تعیین کنید.</p></div>
+      <div class="feature fade-up" style="animation-delay:.24s"><span class="f-ico"><i data-lucide="trending-up"></i></span><h4>آمار و مدیریت</h4><p>در «فایل‌های من» تعداد دانلودها را ببینید و هر فایل را حذف کنید.</p></div>
+    </section>
+  </main>
+
+  <footer id="appFooter"></footer>
+  <script id="lucide-cdn" src="https://unpkg.com/lucide@1.64.0/dist/umd/lucide.min.js" async></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/upload.js"></script>
+</body>
+</html>
